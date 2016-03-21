@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by FurWin on 18/03/2016.
  */
 public class BBDD extends SQLiteOpenHelper {
-    String SqlCreate="CREATE TABLE Usuarios(idusuario PRIMARY KEY,username TEXT,password TEXT,token TEXT)";
+    String SqlCreate="CREATE TABLE Usuarios(idusuario INTEGER PRIMARY KEY,username TEXT,password TEXT,token TEXT)";
 
     public BBDD(Context contexto, String nombre,
                 SQLiteDatabase.CursorFactory factory, int version) {
