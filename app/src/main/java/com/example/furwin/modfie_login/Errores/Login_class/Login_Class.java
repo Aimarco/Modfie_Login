@@ -20,14 +20,16 @@ import com.example.furwin.modfie_login.Errores.Errores.ControlErroresJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by FurWin on 21/03/2016.
  */
-public class Login_Class {
-    private String urlpost = "https://modfie.com/api/v1/users/attempt";
+public class Login_Class implements Serializable {
+    private String urlpost = "https://modfie.com/api/v1/modfies/attempt";
     private GestionaBBDD gestionabbdd = new GestionaBBDD();
     private BBDD bbdd;
-    private String token, username, password;
+    private String token, username, password,unique_id;
     private Context context;
     private int errcod;
 
@@ -59,10 +61,12 @@ public class Login_Class {
                 try {
                     JSONObject jtoken = new JSONObject(response);
                     token = jtoken.getString("token");
+                    unique_id=jtoken.getString("unique_id");
+                    Log.e("UNIQUE",unique_id);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                String[] userdata = {user, pass, token};
+                String[] userdata = {user, pass, token,unique_id};
                 gestionabbdd.insertaDatos(db, "Usuarios", userdata);
                 Toast.makeText(cont, "Login realizado con exito", Toast.LENGTH_SHORT).show();
             }
@@ -92,8 +96,23 @@ public class Login_Class {
 
         return token;
     }
+    public String getunique(int id, Context context, SQLiteDatabase db) {
+        String query = "Select idunica from Usuarios where idusuario=" + id;
+        Cursor c = db.rawQuery(query, null);
+        if (c.moveToFirst()) {
+            setToken(c.getString(0));
+        }
+        return getToken();
+    }
 
-    /*public int testToken(final String token,final Context cont) {
+    public String getUnique_id() {
+        return unique_id;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
+    }
+/*public int testToken(final String token,final Context cont) {
 
         StringRequest request = new StringRequest(Request.Method.POST, urlpost, new Response.Listener<String>() {
             @Override

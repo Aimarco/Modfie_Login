@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.furwin.modfie_login">
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <permission android:name="READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Errores.Login.Login">
+        <activity android:name=".Errores.Login.Login"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".Errores.Home_Screen.Home_Screen"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Errores.Fotos.ScreenFotos"
+        android:screenOrientation="portrait"/>
+        <activity android:name=".Errores.Fotos.Photo_Upload" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

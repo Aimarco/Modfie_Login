@@ -4,10 +4,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.Serializable;
+
 /**
  * Created by FurWin on 18/03/2016.
  */
-public class GestionaBBDD  {
+public class GestionaBBDD  implements Serializable{
 
    /* public GestionaBBDD(SQLiteDatabase bbdd,String operacion,String tabla){
         switch(operacion.toString().toLowerCase()){
@@ -42,6 +44,7 @@ public class GestionaBBDD  {
         values.put("username",params[0]);
         values.put("password",params[1]);
         values.put("token",params[2]);
+        values.put("idunica",params[3]);
 
 //Insertando en la base de datos
         db.insert(tabla,null,values);

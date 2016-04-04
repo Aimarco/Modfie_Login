@@ -1,0 +1,147 @@
+package com.example.furwin.modfie_login.Errores.Home_Screen;
+
+import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.furwin.modfie_login.Errores.Album;
+import com.example.furwin.modfie_login.Errores.BBDD.BBDD;
+import com.example.furwin.modfie_login.Errores.BBDD.GestionaBBDD;
+import com.example.furwin.modfie_login.Errores.Errores.ControlErroresJson;
+import com.example.furwin.modfie_login.Errores.Fotos.ScreenFotos;
+import com.example.furwin.modfie_login.Errores.Login_class.Login_Class;
+import com.example.furwin.modfie_login.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by FurWin on 22/03/2016.
+ */
+public class Home_Screen extends AppCompatActivity {
+    private GestionaBBDD gestionabbdd = new GestionaBBDD();
+    BBDD bbdd;
+    private SQLiteDatabase db;
+    private String token;
+    private int id;
+    private Login_Class login;
+    private Intent intent,intentfotos;
+    private Album album;
+    private Bundle bundle;
+    private GridView gridView;
+    private AlbumAdapter adaptador;
+    private ArrayList<Album> albums;
+    private ProgressBar pb;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.home);
+        intent = getIntent();
+        login =(Login_Class) intent.getSerializableExtra("Datos");
+        album = new Album();
+        album.setUrl(login.getUnique_id());
+        intentfotos=new Intent(this,ScreenFotos.class);
+        token=login.getToken();
+        albums = new ArrayList<>();
+        //albums = RequestAlbums(bundle.getString("token"), album.getUrl(), this);
+        gridView = (GridView) findViewById(R.id.gridView);
+        adaptador = new AlbumAdapter(this);
+        gridView.setAdapter(adaptador);
+        pb=(ProgressBar) findViewById(R.id.progressBar);
+/*
+*Request to the API saving the important data
+* for each album save it in an arrayList
+* Set the View as an adapter for the grid taking the photos from de AL
+*
+* */
+        pb.setVisibility(View.VISIBLE);
+        StringRequest request = new StringRequest(Request.Method.GET, album.getUrl(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsondata = new JSONObject(response).getJSONArray("data");
+                    for (int i = 0; i < jsondata.length(); i++) {
+                        Album album = new Album();
+                        album.setTitulo(jsondata.getJSONObject(i).getString("title"));
+                        album.setId_album(jsondata.getJSONObject(i).getInt("id"));
+                        album.setCont_fotos(jsondata.getJSONObject(i).getInt("count_photos"));
+                        JSONArray photos = jsondata.getJSONObject(i).getJSONObject("photos").getJSONArray("data");
+                        for (int j = 0; j < photos.length(); j++) {
+                            album.setThumb(photos.getJSONObject(0).getJSONObject("file_path").getJSONObject("thumbnails").getString("lg"));
+                            albums.add(album);
+                            Log.e("THUMB", "" + albums.get(i).getThumb());
+                            gridView = (GridView) findViewById(R.id.gridView);
+                            adaptador = new AlbumAdapter(Home_Screen.this);
+                            adaptador.setAlbums(albums);
+                            gridView.setAdapter(adaptador);
+                        }
+                        pb.setVisibility(View.INVISIBLE);
+                    }
+                } catch (JSONException e) {
+                    Log.e("ERROR", e.getMessage());
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse respuesta = error.networkResponse;
+                String jsonerror = new String(respuesta.data);
+                try {
+
+                    JSONObject errorjson = new JSONObject(jsonerror);
+                    //class that treat the error and build the response
+                    ControlErroresJson jsonerror2 = new ControlErroresJson(error.networkResponse.statusCode, errorjson,Home_Screen.this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + token);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Home_Screen.this);
+        requestQueue.add(request);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               intentfotos.putExtra("idalbum",albums.get(position).getId_album());
+                intentfotos.putExtra("Datos",login);
+                intentfotos.putExtra("idfrom","Home");
+                startActivity(intentfotos);
+            }
+        });
+    }
+
+}
