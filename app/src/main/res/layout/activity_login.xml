@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#00BCD4"
     tools:context=".Errores.Login.Login">
 
     <EditText
@@ -43,10 +44,19 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="Skip"
         android:id="@+id/Saltar"
         android:layout_below="@+id/btnLogin"
         android:layout_alignLeft="@+id/btnLogin"
         android:layout_alignStart="@+id/btnLogin" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registrarse"
+        android:id="@+id/Registrarse"
+        android:layout_below="@+id/Saltar"
+        android:layout_alignStart="@+id/Saltar" />
 
 </RelativeLayout>

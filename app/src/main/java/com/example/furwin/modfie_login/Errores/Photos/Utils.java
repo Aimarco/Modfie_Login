@@ -1,4 +1,4 @@
-package com.example.furwin.modfie_login.Errores.Fotos;
+package com.example.furwin.modfie_login.Errores.Photos;
 import android.os.Handler;
 
 public class Utils {

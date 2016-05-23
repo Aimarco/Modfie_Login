@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00BCD4"
+    >
+
+    <GridView
+        android:layout_width="350dp"
+        android:layout_height="420dp"
+        android:id="@+id/gridvideos"
+        android:numColumns="2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_marginLeft="122dp"
+        android:layout_marginStart="113dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="132dp" />
+
+    <ImageButton
+        android:background="@drawable/circulo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/Albumadd"
+        android:src="@android:drawable/ic_input_add"
+        android:elevation="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/gridvideos"
+        android:layout_marginBottom="39dp" />
+</RelativeLayout>

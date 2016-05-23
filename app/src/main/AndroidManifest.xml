@@ -5,9 +5,12 @@
 <uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <permission android:name="READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <application
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,9 +27,21 @@
         </activity>
         <activity android:name=".Errores.Home_Screen.Home_Screen"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Errores.Fotos.ScreenFotos"
+        <activity android:name=".Errores.Photos.ScreenFotos"
         android:screenOrientation="portrait"/>
-        <activity android:name=".Errores.Fotos.Photo_Upload" android:screenOrientation="portrait"/>
+        <activity android:name=".Errores.Photos.Photo_Upload" android:screenOrientation="portrait"/>
+        <activity android:name=".Errores.Album.Album_Screen"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Errores.Photos.Photo_Viewer"/>
+        <activity android:name=".Errores.Album.AddAlbum" android:screenOrientation="portrait" android:theme="@style/AppTheme.CustomTheme">
+
+        </activity>
+        <activity android:name=".Errores.Sounds.Sounds_Screen" android:screenOrientation="portrait"></activity>
+        <activity android:name=".Errores.Sounds.AudioPlayer" android:screenOrientation="portrait" android:theme="@style/AppTheme.CustomTheme"></activity>
+        <activity android:name=".Errores.Sounds.AudioOnTouchActivity" android:screenOrientation="portrait" android:theme="@style/AppTheme.CustomTheme"></activity>
+        <activity android:name=".Errores.Register.Register_Class" android:screenOrientation="portrait" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".Errores.Videos.Video_Screen" android:screenOrientation="portrait" android:theme="@style/AppTheme.CustomTheme"></activity>
+        <activity android:name=".Errores.Videos.AddVideo" android:screenOrientation="portrait" android:theme="@style/AppTheme.CustomTheme"></activity>
     </application>
 
 </manifest>

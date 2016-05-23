@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:id="@+id/recording"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/circulo"
+        android:backgroundTint="@color/link_text_material_light"
+        android:src="@drawable/recgrey" />
+
+    <ImageButton
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:id="@+id/folder"
+        android:background="@drawable/circulo"
+        android:backgroundTint="@color/link_text_material_light"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/mic"
+        android:src="@drawable/folder" />
+
+    <ImageButton
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:id="@+id/mic"
+        android:background="@drawable/circulo"
+        android:backgroundTint="@color/link_text_material_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/mic" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Subir Audio"
+        android:id="@+id/btnsubiraudio"
+        android:layout_below="@+id/folder"
+        android:layout_toStartOf="@+id/folder" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/texttimer"
+        android:layout_alignBottom="@+id/btnsubiraudio"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:id="@+id/txtfname"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/btnsubiraudio" />
+
+</RelativeLayout>

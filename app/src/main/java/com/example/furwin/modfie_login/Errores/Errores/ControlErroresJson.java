@@ -1,5 +1,6 @@
 package com.example.furwin.modfie_login.Errores.Errores;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.TextView;
 
@@ -10,17 +11,19 @@ import org.json.JSONObject;
  */
 public class ControlErroresJson{
     private String message;
+    private JSONObject menserror;
 
     public ControlErroresJson(int errorcod,JSONObject jsonrespuesta,Context activity){
         switch (errorcod){
             case 422:
                 JsonError422 error422=new JsonError422();
-                message=error422.getErrors(jsonrespuesta,activity);break;
+                error422.getErrors(jsonrespuesta,activity);break;
             case 401:
                 JsonError401 error401=new JsonError401();
-                message=error401.getErrors(jsonrespuesta,activity);break;
+                error401.getErrors(jsonrespuesta,activity);break;
                 //textbox.setText(message);
         }
+
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.furwin.modfie_login.Errores.Fotos;
+package com.example.furwin.modfie_login.Errores.Photos;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.furwin.modfie_login.Errores.Album;
 import com.example.furwin.modfie_login.R;
 import com.squareup.picasso.Picasso;
 

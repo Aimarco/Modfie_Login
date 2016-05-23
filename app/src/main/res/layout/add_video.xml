@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/txturl"
+        android:layout_marginLeft="32dp"
+        android:hint="YouTube/Vimeo"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/addvideo"
+        android:layout_marginTop="41dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Añadir video"
+        android:id="@+id/addvideo"
+        android:layout_alignTop="@+id/txturl"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/vidtitle"
+        android:layout_marginLeft="32dp"
+        android:hint="Titulo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/addvideo" />
+</RelativeLayout>

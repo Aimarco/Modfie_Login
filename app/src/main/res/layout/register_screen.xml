@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#00BCD4">
+<android.support.v7.widget.Toolbar
+android:id="@+id/my_toolbar"
+android:layout_width="match_parent"
+android:layout_height="?attr/actionBarSize"
+android:background="@color/colorAccent"
+android:elevation="4dp"
+android:theme="@style/ToolBarTheme"
+    android:touchscreenBlocksFocus="true">
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registro Modfie"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:layout_gravity="center"
+        />
+
+    <ImageButton
+        android:layout_width="75dp"
+        android:layout_height="60dp"
+        android:id="@+id/imgbtnback"
+        android:background="#00000000"
+        android:src="@drawable/back" />
+
+
+</android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="190dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/my_toolbar"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:textColorHint="@color/colorAccent"
+                android:id="@+id/edtusername"
+                android:hint="Nombre de Usuario"
+                android:layout_marginTop="102dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:textColorHint="@color/colorAccent"
+                android:id="@+id/nemail"
+                android:hint="Email"
+                android:layout_below="@+id/edtusername"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:ems="10"
+                android:textColorHint="@color/colorAccent"
+                android:id="@+id/birthdate"
+                android:layout_below="@+id/nemail"
+                android:layout_alignParentStart="true"
+                android:hint="Fecha de nacimiento" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registrarse"
+                android:id="@+id/btnregistrarse"
+                android:layout_marginBottom="38dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
+
+            <RadioGroup
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:weightSum="1"
+                android:id="@+id/radioGroup"
+                android:layout_below="@+id/birthdate"
+                android:layout_alignStart="@+id/btnregistrarse"
+                android:layout_marginTop="48dp">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hombre"
+                    android:buttonTint="@color/colorAccent"
+                    android:id="@+id/rdbmale"
+                    android:layout_below="@+id/rdbmujer"
+                    android:layout_alignParentStart="true" />
+
+                <RadioButton
+                    android:layout_width="89dp"
+                    android:layout_height="wrap_content"
+                    android:text="Mujer"
+                    android:buttonTint="@color/colorAccent"
+                    android:id="@+id/rdbmujer"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true" />
+            </RadioGroup>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/linearLayout"
+        android:layout_alignParentEnd="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:textColorHint="@color/colorAccent"
+                android:id="@+id/npassword1"
+                android:hint="Contraseña min.6"
+                android:layout_marginTop="102dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:textColorHint="@color/colorAccent"
+                android:id="@+id/npassword2"
+                android:hint="Repite Contraseña"
+                android:layout_below="@+id/npassword1"
+                android:layout_alignParentStart="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acepto los terminos de licencia"
+                android:id="@+id/cblicense"
+                android:buttonTint="@color/colorAccent"
+                android:layout_below="@+id/npassword2"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="125dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

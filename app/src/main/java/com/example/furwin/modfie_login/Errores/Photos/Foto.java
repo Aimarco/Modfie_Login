@@ -1,4 +1,4 @@
-package com.example.furwin.modfie_login.Errores.Fotos;
+package com.example.furwin.modfie_login.Errores.Photos;
 
 /**
  * Created by FurWin on 29/03/2016.
@@ -7,7 +7,7 @@ public class Foto {
     private int id;
     private String source;
     private String descripcion;
-    private String url;
+    private String url,urldelete;
 
 
 
@@ -35,4 +35,22 @@ public class Foto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String param) {
+        this.url = "https://modfie.com/api/v1/albums/"+param+"?include=photos";
+    }
+
+    public String getUrldelete() {
+        return urldelete;
+    }
+
+    public void setUrldelete(int param) {
+        this.urldelete = "https://modfie.com/api/v1/photos/"+param;
+    }
 }
+
+

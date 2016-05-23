@@ -15,13 +15,7 @@ public class JsonError401 {
 
     public String getErrors(JSONObject errores,Context activity){
         String mensajeError="";
-
-        try {
-            Toast.makeText(activity, errores.getString("message"), Toast.LENGTH_SHORT).show();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+            Toast.makeText(activity, "Usuario o controaseña incorrectos", Toast.LENGTH_SHORT).show();
         return mensajeError;
     }
 

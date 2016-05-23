@@ -1,7 +1,6 @@
-package com.example.furwin.modfie_login.Errores.Home_Screen;
+package com.example.furwin.modfie_login.Errores.Album;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.furwin.modfie_login.Errores.Album;
+import com.example.furwin.modfie_login.Errores.Album.Album;
 import com.example.furwin.modfie_login.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 /**
  * Created by FurWin on 22/03/2016.
@@ -49,6 +47,9 @@ public AlbumAdapter(Context context){
         ImageView imagenAlbum = (ImageView) view.findViewById(R.id.imagen_album);
         TextView nombreAlbum = (TextView) view.findViewById(R.id.nombre_album);
         TextView photocont=(TextView) view.findViewById(R.id.PhotoCount);
+        if(albums.get(position).getThumb().equals("")){
+            Picasso.with(context).load("https://www.facebook.com/images/photos/empty-album.png").into(imagenAlbum);
+        }else
         Picasso.with(context).load(albums.get(position).getThumb()).into(imagenAlbum);
         nombreAlbum.setText(albums.get(position).getTitulo());
         photocont.setText(""+albums.get(position).getCont_fotos());

@@ -1,147 +1,128 @@
 package com.example.furwin.modfie_login.Errores.Home_Screen;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ProgressBar;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.furwin.modfie_login.Errores.Album;
-import com.example.furwin.modfie_login.Errores.BBDD.BBDD;
-import com.example.furwin.modfie_login.Errores.BBDD.GestionaBBDD;
-import com.example.furwin.modfie_login.Errores.Errores.ControlErroresJson;
-import com.example.furwin.modfie_login.Errores.Fotos.ScreenFotos;
+import com.example.furwin.modfie_login.Errores.Album.Album_Screen;
 import com.example.furwin.modfie_login.Errores.Login_class.Login_Class;
+import com.example.furwin.modfie_login.Errores.Sliding_menu_dep;
+import com.example.furwin.modfie_login.Errores.Sounds.Sounds_Screen;
+import com.example.furwin.modfie_login.Errores.Videos.Video_Screen;
 import com.example.furwin.modfie_login.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by FurWin on 22/03/2016.
  */
 public class Home_Screen extends AppCompatActivity {
-    private GestionaBBDD gestionabbdd = new GestionaBBDD();
-    BBDD bbdd;
-    private SQLiteDatabase db;
-    private String token;
-    private int id;
+    private DrawerLayout mDrawerLayout;
+    private ListView menu;
+    private ArrayAdapter<String> mAdapter;
+    private TextView nombre;
+    private ImageView imagen;
+    private android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
+    private Intent intent, albumintent,soundintent,videointent;
     private Login_Class login;
-    private Intent intent,intentfotos;
-    private Album album;
-    private Bundle bundle;
-    private GridView gridView;
-    private AlbumAdapter adaptador;
-    private ArrayList<Album> albums;
-    private ProgressBar pb;
-
+    private int cont=1;
+    //Sliding_menu_dep slidemenu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
-        intent = getIntent();
-        login =(Login_Class) intent.getSerializableExtra("Datos");
-        album = new Album();
-        album.setUrl(login.getUnique_id());
-        intentfotos=new Intent(this,ScreenFotos.class);
-        token=login.getToken();
-        albums = new ArrayList<>();
-        //albums = RequestAlbums(bundle.getString("token"), album.getUrl(), this);
-        gridView = (GridView) findViewById(R.id.gridView);
-        adaptador = new AlbumAdapter(this);
-        gridView.setAdapter(adaptador);
-        pb=(ProgressBar) findViewById(R.id.progressBar);
+        setContentView(R.layout.menu);
+        intent=getIntent();
+        login=(Login_Class) intent.getSerializableExtra("Datos");
+        mDrawerLayout=(DrawerLayout) findViewById(R.id.drawer_layout);
+        setTitle("Albums");
+        //slidemenu=new Sliding_menu_dep();
+        menu=(ListView) findViewById(R.id.opciones);
+        createSlide(mDrawerLayout);
+    }
 /*
-*Request to the API saving the important data
-* for each album save it in an arrayList
-* Set the View as an adapter for the grid taking the photos from de AL
-*
-* */
-        pb.setVisibility(View.VISIBLE);
-        StringRequest request = new StringRequest(Request.Method.GET, album.getUrl(), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsondata = new JSONObject(response).getJSONArray("data");
-                    for (int i = 0; i < jsondata.length(); i++) {
-                        Album album = new Album();
-                        album.setTitulo(jsondata.getJSONObject(i).getString("title"));
-                        album.setId_album(jsondata.getJSONObject(i).getInt("id"));
-                        album.setCont_fotos(jsondata.getJSONObject(i).getInt("count_photos"));
-                        JSONArray photos = jsondata.getJSONObject(i).getJSONObject("photos").getJSONArray("data");
-                        for (int j = 0; j < photos.length(); j++) {
-                            album.setThumb(photos.getJSONObject(0).getJSONObject("file_path").getJSONObject("thumbnails").getString("lg"));
-                            albums.add(album);
-                            Log.e("THUMB", "" + albums.get(i).getThumb());
-                            gridView = (GridView) findViewById(R.id.gridView);
-                            adaptador = new AlbumAdapter(Home_Screen.this);
-                            adaptador.setAlbums(albums);
-                            gridView.setAdapter(adaptador);
-                        }
-                        pb.setVisibility(View.INVISIBLE);
-                    }
-                } catch (JSONException e) {
-                    Log.e("ERROR", e.getMessage());
-                    e.printStackTrace();
-                }
+************START IMPLEMENTING LATERAL MENU**********************
+ */
+    public void createSlide(DrawerLayout drawer) {
+        mDrawerLayout=drawer;
+        addDrawerItems();
+        setupDrawer();
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                NetworkResponse respuesta = error.networkResponse;
-                String jsonerror = new String(respuesta.data);
-                try {
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
+    }
 
-                    JSONObject errorjson = new JSONObject(jsonerror);
-                    //class that treat the error and build the response
-                    ControlErroresJson jsonerror2 = new ControlErroresJson(error.networkResponse.statusCode, errorjson,Home_Screen.this);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + token);
+    private void addDrawerItems() {
 
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Home_Screen.this);
-        requestQueue.add(request);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        String[] osArray = {"Albums", "Sound","Videos"};
+        mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,osArray);
+        menu.setAdapter(mAdapter);
+        nombre=(TextView) findViewById(R.id.nombre);
+        imagen=(ImageView) findViewById(R.id.Imagen);
+        Picasso.with(this).load("https://untiempoparaamonita.files.wordpress.com/2014/11/loto-rosa-loto-sagrado-nelumbo-nucifera1.jpg").into(imagen);
+        nombre.setText("Aimar Correyero");
+
+        soundintent=new Intent(this, Sounds_Screen.class);
+        albumintent = new Intent(this, Album_Screen.class);
+        videointent=new Intent(this,Video_Screen.class);
+        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               intentfotos.putExtra("idalbum",albums.get(position).getId_album());
-                intentfotos.putExtra("Datos",login);
-                intentfotos.putExtra("idfrom","Home");
-                startActivity(intentfotos);
+                switch (position) {
+                    case 0:
+                        albumintent.putExtra("Datos", login);
+                        startActivity(albumintent);
+                        break;
+                    case 1:
+                        soundintent.putExtra("Datos", login);
+                        startActivity(soundintent);break;
+                    case 2:
+                        videointent.putExtra("Datos",login);
+                        startActivity(videointent);
+
+
+                }
+
             }
         });
     }
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout , R.string.abrir, R.string.cerrar) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                //getSupportActionBar().setTitle("Menu");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                //getSupportActionBar().setTitle("Home");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+    }
+    @Override
+    public void onBackPressed()
+    {
+        if(cont<2){
+            Toast.makeText(Home_Screen.this, "Presiona atras otra vez para salir", Toast.LENGTH_SHORT).show();
+            cont++;}
+        else
+            System.exit(0);
+    }
+
 
 }
